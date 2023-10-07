@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\AuthorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\MyFacade\Store;
@@ -33,4 +34,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/article/{article}', [ArticleController::class, 'show']);
     Route::delete('/article/delete/{article}', [ArticleController::class, 'delete']);
     Route::put('/article/update/{article}',[ArticleController::class,'update']);
+});
+Route::group(['middleware'=>['auth:sanctum']],function(){
+    Route::get('/author/index',[AuthorController::class,'index']);
+    Route::get('/author/{author}',[AuthorController::class,'show']);
+    Route::post('/author/store',[AuthorController::class,'store']);
+    Route::put('/author/update/{author}',[AuthorController::class,'update']);
+    Route::delete('/author/delete/{author}',[AuthorController::class,'delete']);
 });
