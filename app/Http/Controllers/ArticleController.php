@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuthorsArticleRequest;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Article;
@@ -84,5 +85,31 @@ class ArticleController extends Controller
                 'Error occurred'
             ], 500);
         }
+    }
+    public function AttchAuthour(AuthorsArticleRequest $request, Article $article)
+    {
+
+        $article->authors()->attach($request->authors);
+        return response()->json([
+            'message' => 'authors attached successfully'
+        ]);
+    }
+    public function DetachAuthor(Request $request, Article $article)
+    {
+        $article->authors()->detach($request->authors);
+        return response()->json([
+            'message' => 'removed the authors to this article done successfully'
+        ]);
+    }
+    public function ShowAuthors(Article $article)
+    {
+        $authors = $article->authors;
+        foreach($authors as &$author)
+        {
+            $author->makeHidden('pivot');
+        }
+        return response()->json([
+            'authors' => $authors
+        ]);
     }
 }
