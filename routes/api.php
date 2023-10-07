@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
-Route::post('/test',function(Request $request){
-   return StoreFacade::StoreImage($request->image);
+Route::post('/test', function (Request $request) {
+    return StoreFacade::StoreImage($request->image);
+});
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::post('article/store', [ArticleController::class, 'store']);
+    Route::get('/article/index', [ArticleController::class, 'index']);
+    Route::get('/article/{article}', [ArticleController::class, 'show']);
+    Route::delete('/article/delete/{article}', [ArticleController::class, 'delete']);
+    Route::put('/article/update/{article}',[ArticleController::class,'update']);
 });

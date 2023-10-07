@@ -3,6 +3,8 @@
 namespace App\MyService;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
+
 
 class StoreImage
 {
@@ -11,5 +13,8 @@ class StoreImage
         $imageName = time() . '.' . $image->getClientOriginalExtension();
         $image->move(public_path('images'), $imageName);
         return 'images' . '/' . $imageName;
+    }
+    public function delete(String $path){
+        File::delete(public_path($path));
     }
 }

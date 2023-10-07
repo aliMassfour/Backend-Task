@@ -15,6 +15,6 @@ class Article extends Model
     ];
     public function authors()
     {
-        return $this->belongsToMany(User::class,'articles_users','article_id','author_id','id','id');
+        return $this->belongsToMany(Author::class,'articles_authors','article_id','author_id','id','id');
     }
 }

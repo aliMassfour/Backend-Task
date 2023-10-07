@@ -7,7 +7,7 @@ use BadMethodCallException;
 
 class StoreFacade
 {
-    protected static $methods = ['StoreImage'];
+    protected static $methods = ['StoreImage','delete'];
     public static function ResolveFacade($name)
     {
         return app()[$name];
